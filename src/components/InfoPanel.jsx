@@ -1,11 +1,11 @@
 
-const Info = () => {
-    const data = {
-        Sun: {
+
+const InfoPanel = ({planet,onClose}) => {
+    const data = [
+        {
             name: "Sun",
             type: "Star",
-            description:
-                "The Sun is the star at the center of our Solar System. Its enormous gravity keeps the planets, moons, asteroids, and other objects in orbit. It provides the light and heat that make life on Earth possible.",
+            description:"The Sun is the star at the center of our Solar System. Its enormous gravity keeps the planets, moons, asteroids, and other objects in orbit. It provides the light and heat that make life on Earth possible.",
             diameter: "1.39 million km",
             distanceFromEarth: "149.6 million km",
             surfaceTemperature: "≈ 5,500°C",
@@ -13,11 +13,10 @@ const Info = () => {
             moons: 0,
             funFact:"The Sun contains about 99.8% of the total mass of the Solar System."
         },
-        Moon: {
+        {
             name: "Moon",
             type: "Natural Satellite",
-            description:
-                "The Moon is Earth's only natural satellite. Its gravitational pull influences Earth's tides, and its surface is covered with craters, mountains, and large plains formed by ancient volcanic activity.",
+            description:"The Moon is Earth's only natural satellite. Its gravitational pull influences Earth's tides, and its surface is covered with craters, mountains, and large plains formed by ancient volcanic activity.",
             diameter: "3,475 km",
             distanceFromEarth: "≈ 384,400 km",
             orbitalPeriod: "27.3 days",
@@ -25,7 +24,7 @@ const Info = () => {
             moons: 0,
             funFact:"The same side of the Moon always faces Earth because its rotation period matches its orbital period."
         },
-        Mercury: {
+        {
             name: "Mercury",
             type: "Terrestrial Planet",
             description:"Mercury is the smallest planet and the closest planet to the Sun. It has a rocky surface covered with craters and experiences extreme temperature changes between day and night.",
@@ -38,7 +37,7 @@ const Info = () => {
             funFact:"A year on Mercury is shorter than a day on Mercury."
         },
 
-        Venus: {
+        {
             name: "Venus",
             type: "Terrestrial Planet",
             description:"Venus is the second planet from the Sun and is similar in size to Earth. Its thick atmosphere traps heat, making it the hottest planet in the Solar System.",
@@ -51,7 +50,7 @@ const Info = () => {
             funFact:"Venus rotates in the opposite direction to most planets."
         },
 
-        Earth: {
+        {
             name: "Earth",
             type: "Terrestrial Planet",
             description:"Earth is the third planet from the Sun and the only known planet to support life. Its surface contains vast oceans, continents, and a protective atmosphere.",
@@ -64,7 +63,7 @@ const Info = () => {
             funFact:"About 71% of Earth's surface is covered by water."
         },
 
-        Mars: {
+        {
             name: "Mars",
             type: "Terrestrial Planet",
             description:"Mars is a cold, rocky planet known for its reddish appearance. Its surface contains huge volcanoes, deep valleys, and evidence of ancient water activity.",
@@ -77,7 +76,7 @@ const Info = () => {
             funFact:"Mars is home to Olympus Mons, the largest known volcano in the Solar System."
         },
 
-        Jupiter: {
+        {
             name: "Jupiter",
             type: "Gas Giant",
             description:"Jupiter is the largest planet in the Solar System. It is a massive gas giant made mostly of hydrogen and helium and is famous for its enormous storms.",
@@ -90,7 +89,7 @@ const Info = () => {
             funFact:"Jupiter's Great Red Spot is a gigantic storm that has lasted for centuries."
         },
 
-        Saturn: {
+       {
             name: "Saturn",
             type: "Gas Giant",
             description:"Saturn is the sixth planet from the Sun and is famous for its spectacular ring system. Like Jupiter, it is primarily composed of hydrogen and helium.",
@@ -103,7 +102,7 @@ const Info = () => {
             funFact:"Saturn's rings are made mostly of ice and rocky particles."
         },
 
-        Uranus: {
+       {
             name: "Uranus",
             type: "Ice Giant",
             description:"Uranus is a pale blue ice giant with a unique sideways rotation. Its unusual orientation gives it extreme seasonal changes as it travels around the Sun.",
@@ -116,7 +115,7 @@ const Info = () => {
             funFact:"Uranus rotates almost completely on its side."
         },
 
-        Neptune: {
+        {
             name: "Neptune",
             type: "Ice Giant",
             description:"Neptune is the farthest known planet from the Sun. It is a cold, blue ice giant with some of the fastest winds in the Solar System.",
@@ -128,11 +127,48 @@ const Info = () => {
             temperature: "-200°C average",
             funFact:"Neptune has some of the fastest winds measured on any planet."
         }
-    };
-
+    ];
   return (
-    <div>{data}</div>
+    <>
+    {data.map((p)=>{
+        if(planet.toLowerCase() === p.name.toLowerCase()){
+            return(
+                <div className="w-md  px-6 py-4 absolute bottom-4 left-4 rounded-2xl text-white z-50 border-2 border-white bg-linear-120 from-gray-900 to-gray-950">
+                    <div className="flex gap-1 justify-between">
+                        <div className="leading-3">
+                            <h2 className="font-bold text-2xl">{p.name}</h2>
+                            <h4 className="font-light text-xs">{p.type}</h4>
+                        </div>
+                        <button className="bg-red-600 px-2 py-1 rounded-xs cursor-pointer font-bold" onClick={onClose}>X</button>
+                    </div>
+                    <div className="font-medium">
+                        <p className="text-sm font-semibold">Description: {p.description}</p>
+                        <div className="grid grid-cols-2 ">
+                            <p>Diameter: {p.diameter}</p>
+                            <p>Day Length: {p.dayLength}</p>
+                        </div>
+                        {p.name === "Moon" || p.name === "Sun" ? <div className="grid grid-cols-2">
+                            <p>Distance From Earth: {p.distanceFromEarth}</p>
+                            <p>Surface Temperature: {p.surfaceTemperature}</p>
+                        </div> :<>
+                            <div className="grid grid-cols-2 ">
+                                <p>Distance From Sun: {p.distanceFromSun}</p>
+                                <p>Temperature:{p.temperature}</p>
+                            </div>
+                            <div className="grid grid-cols-2">
+                                <p>Days Length: {p.dayLength}</p>
+                                <p>Year Length: {p.yearLength}</p>
+                            </div>
+                        </>}
+                        {p.moons != 0 ? <p>Moons: {p.moons}</p>:""}
+                        <p>Fun Fact: {p.funFact}</p>
+                    </div>
+                </div>
+            )
+        }
+    })}
+    </>
   )
 }
 
-export default Info
+export default InfoPanel

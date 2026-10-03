@@ -1,82 +1,88 @@
-const planet = () => {
-    const Moon = {
-        radius: 0.27,
-        distance: 1.8,
-        rotationSpeed: 0.005,
-        orbitSpeed: 0.03,
-        texture: "/textures/moon.jpg"
-    };
-    const Sun ={
-        radius: 5,
-        rotationSpeed: 0.002,
-        texture: "/textures/sun.jpg"
-    };
-    const planetConfig = {
-        Mercury: {
-        radius: 0.38,
-        distance: 6,
-        rotationSpeed: 0.004,
-        orbitSpeed: 0.008,
-        texture: "./textures/mercury.jpg",
+import Saturn from "./Saturn";
+import PlanetItem from "./PlanetItem";
+import Orbit from "./Orbit";
+
+const planet = ({elapsed,isPaused,onSelect,}) => {
+    const planets = [
+        {
+            name: "Mercury",        
+            radius: 0.25,
+            distance: 3,
+            speed:2.0,
+            texture: "/textures/mercury.jpg",
         },
 
-        Venus: {
-        radius: 0.95,
-        distance: 9,
-        rotationSpeed: -0.002,
-        orbitSpeed: 0.006,
-        texture: "./textures/venus.jpg",
+        {
+            name: "Venus",
+            radius: 0.45,
+            distance: 4.5,
+            speed:1.6,
+            texture: "/textures/venus.jpg",
         },
 
-        Earth: {
-        radius: 1,
-        distance: 12,
-        rotationSpeed: 0.01,
-        orbitSpeed: 0.005,
-        texture: "./textures/earth.jpg",
+        {
+            name: "Earth",  
+            radius: 0.5,
+            distance: 6, 
+            speed: 1.0,
+            texture: "/textures/earth.jpg",
         },
 
-        Mars: {
-        radius: 0.53,
-        distance: 15,
-        rotationSpeed: 0.008,
-        orbitSpeed: 0.004,
-        texture: "/textures/mars.jpg",
+        {
+            name: "Mars",
+            radius: 0.35,
+            distance: 8, 
+            speed: 0.8,
+            texture: "/textures/mars.jpg",
         },
 
-        Jupiter: {
-        radius: 2.5,
-        distance: 21,
-        rotationSpeed: 0.02,
-        orbitSpeed: 0.002,
-        texture: "/textures/jupiter.jpg",
+        {
+            name: "Jupiter",
+            radius:1.2,
+            distance: 12, 
+            speed: 0.4,
+            texture: "/textures/jupiter.jpg",
         },
 
-        Saturn: {
-        radius: 2.1,
-        distance: 27,
-        rotationSpeed: 0.018,
-        orbitSpeed: 0.0015,
-        texture: "/textures/saturn.jpg",
+        {
+            name: "Saturn",
+            radius: 1.0,
+            distance: 16,
+            speed:0.3,
+            texture: "/textures/saturn.jpg",
         },
 
-        Uranus: {
-        radius: 1.5,
-        distance: 33,
-        rotationSpeed: 0.012,
-        orbitSpeed: 0.001,
-        texture: "/textures/uranus.jpg",
+        {
+            name: "Uranus",
+            radius:0.7,
+            distance: 20, 
+            speed: 0.2,
+            texture: "/textures/uranus.jpg",
         },
 
-        Neptune: {
-        radius: 1.45,
-        distance: 39,
-        rotationSpeed: 0.011,
-        orbitSpeed: 0.0008,
-        texture: "/textures/neptune.jpg",
+        {
+            name: "Neptune",
+            radius: 0.8,
+            distance: 24, 
+            speed: 0.15,
+            texture: "/textures/neptune.jpg",
         },
-    };
-  return <div>{planetConfig}</div>;
+    ];
+  return (
+    <>
+    {planets.map((planet)=>{
+        return(
+            <group key={planet.name}>
+                <Orbit distance={planet.distance}/>
+                {planet.name === 'Saturn'? 
+                (<Saturn key={planet.name} elapsed={elapsed} isPaused={isPaused} onSelect={onSelect} planet={planet}/>):
+                (<PlanetItem key={planet.name} planet={planet} elapsed={elapsed} isPaused={isPaused} onSelect={onSelect}/>)
+                }
+            </group>
+        )
+    })}
+    </>
+  )
 };
 
 export default planet;
